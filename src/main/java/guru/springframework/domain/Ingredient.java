@@ -1,10 +1,12 @@
 package guru.springframework.domain;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Accessors(chain = true)
 @Data
 @Entity
 public class Ingredient {

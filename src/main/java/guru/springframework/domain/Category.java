@@ -1,10 +1,12 @@
 package guru.springframework.domain;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Accessors(chain = true)
 @Data
 @Entity
 public class Category {

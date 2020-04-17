@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,7 +11,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Accessors(chain = true)
 @Entity
 public class Recipe {
 

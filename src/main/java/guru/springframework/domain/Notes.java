@@ -1,10 +1,12 @@
 package guru.springframework.domain;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.bytecode.enhance.spi.interceptor.AbstractLazyLoadInterceptor;
 
 import javax.persistence.*;
 
+@Accessors(chain = true)
 @Data
 @Entity
 public class Notes {
