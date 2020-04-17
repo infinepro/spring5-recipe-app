@@ -6,5 +6,41 @@
 </head>
 <body>
 <h1>My recipe!</h1>
+<table>
+    <tr>
+        <th>id</th>
+        <th>Description</th>
+        <th>Prepared Time</th>
+        <th>Cook time</th>
+        <th>Servings</th>
+        <th>Source</th>
+        <th>Url</th>
+        <th>Directions</th>
+        <th>Notes</th>
+        <th>Ingredients</th>u
+    </tr>
+    <tr th:each = "recipe : ${recipes}">
+        <td th:text = "${recipe.id}">0</td>
+        <td th:text = "${recipe.description}">none</td>
+        <td th:text = "${recipe.prepTime}">none</td>
+        <td th:text = "${recipe.cookTime}">none</td>
+        <td th:text = "${recipe.servings}">none</td>
+        <td th:text = "${recipe.source}">none</td>
+        <td th:text = "${recipe.url}">none</td>
+        <td th:text = "${recipe.directions}">none</td>
+        <td th:text = "${recipe.notes.recipeNotes}">none</td>
+        <td>
+            <ul th:each="ingredient : ${recipe.ingredients}">
+                <li th:text = "${ingredient.id}"></li>
+                <li th:text = "${ingredient.amount}"></li>
+                <li th:text = "${ingredient.uop.description}"></li>
+                <li th:text = "${ingredient.description}"></li>
+            </ul>
+        </td>
+    </tr>
+
+
+</table>
+
 </body>
 </html>
