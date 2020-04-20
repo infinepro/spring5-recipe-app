@@ -25,6 +25,7 @@ public class CategoryRepositoryTest {
     @Test
     public void findByDescriptionTest () {
         Optional<Category> testCategory = categoryRepository.findByDescription("American");
+
         Assertions.assertEquals("American", testCategory.get().getDescription());
     }
 }
