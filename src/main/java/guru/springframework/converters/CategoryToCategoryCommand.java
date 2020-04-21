@@ -12,29 +12,29 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class CategoryToCategoryCommand implements Converter<Category, CategoryCommand> {
+public class CategoryToCategoryCommand implements Converter<CategoryCommand, Category> {
 
-    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public CategoryToCategoryCommand(RecipeCommandToRecipe recipeCommandToRecipe) {
-        this.recipeCommandToRecipe = recipeCommandToRecipe;
+    public CategoryToCategoryCommand(RecipeToRecipeCommand recipeToRecipeCommand) {
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Synchronized
     @Nullable
     @Override
-    public Category convert(CategoryCommand convertObject) {
+    public CategoryCommand convert(Category convertObject) {
 
         if (convertObject == null) {
             return null;
         }
 
-        Set<Recipe> recipes = convertObject.getRecipes()
+        Set<RecipeCommand> recipes = convertObject.getRecipes()
                 .stream()
-                .map(recipeCommandToRecipe::convert)
+                .map(recipeToRecipeCommand::convert)
                 .collect(Collectors.toSet());
 
-        return new Category()
+        return new CategoryCommand()
                 .setId(convertObject.getId())
                 .setDescription(convertObject.getDescription())
                 .setRecipes(recipes);
