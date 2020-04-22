@@ -1,10 +1,8 @@
 package guru.springframework.converters;
 
 import guru.springframework.commands.IngredientCommand;
-import guru.springframework.commands.RecipeCommand;
 import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.domain.Ingredient;
-import guru.springframework.domain.UnitOfMeasure;
 import lombok.Synchronized;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -13,12 +11,9 @@ import org.springframework.stereotype.Component;
 public class IngredientToIngredientCommand implements Converter<IngredientCommand, Ingredient> {
 
     private final UnitOfMeasureToUnitOfMeasureCommand uopCommandToUop;
-    private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public IngredientToIngredientCommand(UnitOfMeasureToUnitOfMeasureCommand uopCommandToUop,
-                                         RecipeToRecipeCommand recipeToRecipeCommand) {
+    public IngredientToIngredientCommand(UnitOfMeasureToUnitOfMeasureCommand uopCommandToUop) {
         this.uopCommandToUop = uopCommandToUop;
-        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Synchronized
@@ -30,9 +25,6 @@ public class IngredientToIngredientCommand implements Converter<IngredientComman
             return null;
         }
 
-        RecipeCommand recipeCommand = recipeToRecipeCommand
-                .convert(convertObject.getRecipe());
-
         UnitOfMeasureCommand uopCommand = uopCommandToUop
                 .convert(convertObject.getUop());
 
@@ -40,7 +32,6 @@ public class IngredientToIngredientCommand implements Converter<IngredientComman
                 .setId(convertObject.getId())
                 .setAmount(convertObject.getAmount())
                 .setDescription(convertObject.getDescription())
-                .setUop(uopCommand)
-                .setRecipe(recipeCommand);
+                .setUop(uopCommand);
     }
 }

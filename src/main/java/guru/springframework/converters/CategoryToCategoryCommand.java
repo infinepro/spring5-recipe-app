@@ -14,12 +14,6 @@ import java.util.stream.Collectors;
 @Component
 public class CategoryToCategoryCommand implements Converter<CategoryCommand, Category> {
 
-    private final RecipeToRecipeCommand recipeToRecipeCommand;
-
-    public CategoryToCategoryCommand(RecipeToRecipeCommand recipeToRecipeCommand) {
-        this.recipeToRecipeCommand = recipeToRecipeCommand;
-    }
-
     @Synchronized
     @Nullable
     @Override
@@ -29,15 +23,9 @@ public class CategoryToCategoryCommand implements Converter<CategoryCommand, Cat
             return null;
         }
 
-        Set<RecipeCommand> recipes = convertObject.getRecipes()
-                .stream()
-                .map(recipeToRecipeCommand::convert)
-                .collect(Collectors.toSet());
-
         return new CategoryCommand()
                 .setId(convertObject.getId())
-                .setDescription(convertObject.getDescription())
-                .setRecipes(recipes);
+                .setDescription(convertObject.getDescription());
 
     }
 }

@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ExtendWith(SpringExtension.class)
 public class RecipeServiceIT {
 
-    public static final String NEW_DESCRIPTION = "New Description";
+    final String NEW_DESCRIPTION = "New Description";
 
     @Autowired
     RecipeToRecipeCommand recipeToRecipeCommand;
@@ -61,12 +61,5 @@ public class RecipeServiceIT {
         Assertions.assertEquals(testRecipe.getId(), saveRecipeCommand.getId());
         Assertions.assertEquals(testRecipe.getIngredients().size(), saveRecipeCommand.getIngredients().size());
         Assertions.assertEquals(testRecipe.getCategories().size(), saveRecipeCommand.getCategories().size());
-
-
-
-
-
     }
-
-
 }

@@ -2,7 +2,6 @@ package guru.springframework.converters;
 
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.domain.Ingredient;
-import guru.springframework.domain.Recipe;
 import guru.springframework.domain.UnitOfMeasure;
 import lombok.Synchronized;
 import org.springframework.lang.Nullable;
@@ -11,12 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class IngredientCommandToIngredient implements Converter<Ingredient, IngredientCommand> {
 
-    private final RecipeCommandToRecipe recipeCommandToRecipe;
     private final UnitOfMeasureCommandToUnitOfMeasure uomCommandToUom;
 
-    public IngredientCommandToIngredient(RecipeCommandToRecipe recipeCommandToRecipe,
-                                         UnitOfMeasureCommandToUnitOfMeasure uomCommandToUom) {
-        this.recipeCommandToRecipe = recipeCommandToRecipe;
+    public IngredientCommandToIngredient(UnitOfMeasureCommandToUnitOfMeasure uomCommandToUom) {
         this.uomCommandToUom = uomCommandToUom;
     }
 
@@ -29,9 +25,6 @@ public class IngredientCommandToIngredient implements Converter<Ingredient, Ingr
             return null;
         }
 
-        Recipe recipe = recipeCommandToRecipe
-                .convert(convertObject.getRecipe());
-
         UnitOfMeasure unitOfMeasure = uomCommandToUom.
                 convert(convertObject.getUop());
 
@@ -39,8 +32,7 @@ public class IngredientCommandToIngredient implements Converter<Ingredient, Ingr
                 .setId(convertObject.getId())
                 .setUop(unitOfMeasure)
                 .setAmount(convertObject.getAmount())
-                .setDescription(convertObject.getDescription())
-                .setRecipe(recipe);
+                .setDescription(convertObject.getDescription());
 
     }
 }
