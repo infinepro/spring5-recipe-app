@@ -140,7 +140,7 @@ class RecipeCommandToRecipeTest {
         Assertions.assertEquals(convertRecipe.getDifficulty(), testRecipeCommand.getDifficulty());
         Assertions.assertEquals(convertRecipe.getServings(), testRecipeCommand.getServings());
         Assertions.assertEquals(convertRecipe.getDirections(), testRecipeCommand.getDirections());
-        Assertions.assertEquals(convertRecipe.getNotes().getId(), testRecipeCommand.getNotes().getRecipeNotes());
+        Assertions.assertEquals(convertRecipe.getNotes().getId(), testRecipeCommand.getNotes().getId());
 
         Assertions.assertEquals(convertRecipe.getIngredients().size(), testRecipeCommand.getIngredients().size());
         Assertions.assertEquals(convertRecipe.getCategories().size(), testRecipeCommand.getCategories().size());
