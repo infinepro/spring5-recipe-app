@@ -11,7 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
 class UnitOfMeasureRepositoryTest {
 

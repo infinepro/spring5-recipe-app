@@ -18,6 +18,5 @@ public class IngredientCommand {
     private BigDecimal amount;
     private String description;
     private UnitOfMeasureCommand uop;
-    private RecipeCommand recipe;
 
 }
