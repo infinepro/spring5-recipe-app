@@ -4,9 +4,8 @@ import guru.springframework.commands.CategoryCommand;
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.NotesCommand;
 import guru.springframework.commands.RecipeCommand;
-import guru.springframework.domain.Difficulty;
-import guru.springframework.domain.Notes;
-import guru.springframework.domain.Recipe;
+import guru.springframework.domain.*;
+import org.assertj.core.api.AssertionInfo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
@@ -74,32 +73,7 @@ class RecipeCommandToRecipeTest {
     }
 
     @Test
-    void testConvertWithNullIngredientCommandAndCategoryCommandAndNotesCommand() {
-        //setup data
-        testRecipeCommand
-                .setNotes(null)
-                .setCategories(null)
-                .setIngredients(null);
-
-        //convert
-        Recipe convertRecipe = recipeCommandToRecipe.convert(testRecipeCommand);
-
-        //check
-        Assertions.assertEquals(convertRecipe.getId(), testRecipeCommand.getId());
-        Assertions.assertNull(convertRecipe.getIngredients());
-        Assertions.assertNull(convertRecipe.getCategories());
-        Assertions.assertNull(convertRecipe.getNotes());
-
-    }
-
-    @Test
-    void testConvertToRecipeWithEmptyIngredientsAndCategoriesAndNotes() {
-        //setup data
-        testRecipeCommand
-                .setNotes(new NotesCommand())
-                .setCategories(new HashSet<CategoryCommand>())
-                .setIngredients(new HashSet<IngredientCommand>());
-
+    void testConvertToRecipeWithEmptyIngredientsAndCategories() {
         //convert
         Recipe convertRecipe = recipeCommandToRecipe.convert(testRecipeCommand);
 
@@ -107,7 +81,6 @@ class RecipeCommandToRecipeTest {
         Assertions.assertEquals(convertRecipe.getId(), testRecipeCommand.getId());
         Assertions.assertNotNull(convertRecipe.getIngredients());
         Assertions.assertNotNull(convertRecipe.getCategories());
-        Assertions.assertNotNull(convertRecipe.getNotes());
     }
 
     @Test
@@ -119,13 +92,15 @@ class RecipeCommandToRecipeTest {
         categoryCommandSet.add(new CategoryCommand().setId(CATEGORY_ID_1));
         categoryCommandSet.add(new CategoryCommand().setId(CATEGORY_ID_2));
 
+
         Set<IngredientCommand> ingredientCommandSet = new HashSet<>();
         ingredientCommandSet.add(new IngredientCommand().setId(INGREDIENT_ID_1));
         ingredientCommandSet.add(new IngredientCommand().setId(INGREDIENT_ID_2));
 
         testRecipeCommand
                 .setCategories(categoryCommandSet)
-                .setIngredients(ingredientCommandSet);
+                .setIngredients(ingredientCommandSet)
+                .setNotes(notesCommand);
 
         //convert
         Recipe convertRecipe = recipeCommandToRecipe.convert(testRecipeCommand);
