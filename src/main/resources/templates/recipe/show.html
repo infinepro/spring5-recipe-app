@@ -23,16 +23,21 @@
         <div class="panel-body">
             <p>Cook time: <span th:text="${recipe.cookTime}">none</span> minutes;</p>
             <p>Prepare time: <span th:text="${recipe.prepTime}">none</span> minutes;</p>
-            <p>Source: <a th:href="${recipe.source}" ><span th:text="${recipe.source}">none</span></a></p>
+            <p>Source: <a th:href="${recipe.source}"><span th:text="${recipe.source}">none</span></a></p>
         </div>
     </div>
     <div class="panel panel-info">
-        <div class="panel-heading">Ingredients</div>
+        <div class="panel-heading">
+            Ingredients
+            <span style="margin-right: 100px">
+                <a class="btn btn-default" th:href="'/recipe/' + ${recipe.id} + '/ingredients'">view</a>
+            </span>
+        </div>
         <div class="panel-body">
             <ul class="list-group">
                 <li class="list-group-item" th:each="ingredient : ${recipe.ingredients}">
-                    <span th:text="${ingredient.amount}">999</span>
-                    <span th:text="${ingredient.uop.description}">lb  :>>>   </span>
+                    <span th:text="${ingredient.amount}">0</span>
+                    <span th:text="${ingredient.uop.description}">none</span>
                     <span th:text="${ingredient.description}">default description</span>
                 </li>
             </ul>
