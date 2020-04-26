@@ -18,25 +18,42 @@ public class RecipeController {
     }
 
     @RequestMapping("recipe/show/{id}")
-    public String getRecipe(@PathVariable Long id, Model model) {
-
-        model.addAttribute("recipe", recipeService.getRecipeById(id));
+    public String getRecipePageById(@PathVariable Long id, Model model) {
+        model.addAttribute("recipe", recipeService.getRecipeCommandById(id));
+        log.info("Get recipe for user with ID: " + id);
 
         return "recipe/show";
     }
 
     @GetMapping("recipe/new")
-    public String newRecipe(Model model) {
+    public String newRecipePage(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
-        return "recipe/add-recipe-form";
+        return "recipe/recipe-form";
+    }
+
+    @GetMapping("recipe/{id}/update")
+    public String updateRecipePage(@PathVariable Long id, Model model) {
+        model.addAttribute("recipe", recipeService.getRecipeCommandById(id));
+
+        return "recipe/recipe-form";
     }
 
 
     @PostMapping("recipe/new")
-    public String saveOrUpdateNewRecipe(@ModelAttribute RecipeCommand recipeCommand) {
+    public String saveOrUpdateRecipe(@ModelAttribute RecipeCommand recipeCommand) {
         RecipeCommand saveRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
+        log.info("Add or update recipe with ID: " + saveRecipeCommand.getId());
 
         return "redirect:/recipe/show/" + saveRecipeCommand.getId();
     }
+
+    @GetMapping("recipe/{id}/delete")
+    public String deleteRecipeById(@PathVariable Long id) {
+        recipeService.deleteRecipeById(id);
+        log.info("Recipe with ID: " + id + " deleted");
+
+        return "redirect:/index";
+    }
+
 }

@@ -33,12 +33,16 @@
                                 <th scope="col">id</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">-</th>
+                                <th scope="col">-</th>
+                                <th scope="col">-</th>
                             </tr>
                             </thead>
                             <tr th:each="recipe : ${recipes}">
                                 <td th:text="${recipe.id}">0</td>
                                 <td th:text="${recipe.description}">none</td>
                                 <td><a th:href="@{'/recipe/show/' + ${recipe.id}}">View</a></td>
+                                <td><a th:href="@{'/recipe/' + ${recipe.id}} + '/update'">Update</a></td>
+                                <td><a th:href="@{'/recipe/' + ${recipe.id}} + '/delete'">Delete</a></td>
                             </tr>
                         </table>
                     </div>

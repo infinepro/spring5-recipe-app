@@ -34,7 +34,7 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    void getRecipeById() {
+    void testGetRecipeById() {
         Recipe testRecipe = new Recipe();
         testRecipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(testRecipe);
@@ -45,7 +45,7 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    void getAllRecipes() {
+    void testGetAllRecipes() {
         List<Recipe> testRecipes = new ArrayList<>();
         Recipe testRecipe = new Recipe();
         testRecipe.setId(1L);
@@ -54,5 +54,14 @@ class RecipeServiceImplTest {
         when(recipeRepository.findAll()).thenReturn(testRecipes);
         Assertions.assertEquals(recipeService.getAllRecipes().size(), 1);
         verify(recipeRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testDeleteRecipeById() {
+        Long testId = 3L;
+
+        recipeService.deleteRecipeById(testId);
+
+        verify(recipeRepository, times(1)).deleteById(anyLong());
     }
 }
