@@ -42,11 +42,11 @@
                             <tr th:each="ingredient : ${recipe.ingredients}">
                                 <td th:text="${ingredient.id}">0</td>
                                 <td th:text="${ingredient.amount}">0</td>
-                                <td th:text="${ingredient.uop.description}">0</td>
+                                <td th:text="${ingredient.uom.description}">0</td>
                                 <td th:text="${ingredient.description}">none</td>
-                                <td><a th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/update'}">update</a></td>
+                                <td><a th:href="@{'/ingredient/' + ${ingredient.id} + '/update'}">update</a></td>
                                 <td><a th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/delete'}">delete</a></td>
-                                <td><a th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/new'}">delete</a></td>
+                                <td><a th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/new'}">add new</a></td>
                             </tr>
                         </table>
                     </div>

@@ -37,7 +37,7 @@
             <ul class="list-group">
                 <li class="list-group-item" th:each="ingredient : ${recipe.ingredients}">
                     <span th:text="${ingredient.amount}">0</span>
-                    <span th:text="${ingredient.uop.description}">none</span>
+                    <span th:text="${ingredient.uom.description}">none</span>
                     <span th:text="${ingredient.description}">default description</span>
                 </li>
             </ul>

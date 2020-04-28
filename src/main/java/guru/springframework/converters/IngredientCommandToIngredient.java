@@ -26,11 +26,11 @@ public class IngredientCommandToIngredient implements Converter<Ingredient, Ingr
         }
 
         UnitOfMeasure unitOfMeasure = uomCommandToUom.
-                convert(convertObject.getUop());
+                convert(convertObject.getUom());
 
         return new Ingredient()
                 .setId(convertObject.getId())
-                .setUop(unitOfMeasure)
+                .setUom(unitOfMeasure)
                 .setAmount(convertObject.getAmount())
                 .setDescription(convertObject.getDescription());
 

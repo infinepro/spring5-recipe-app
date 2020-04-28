@@ -36,6 +36,7 @@ public class IngredientController {
     @GetMapping("recipe/{id}/ingredient/new")
     public String getNewIngredientPage(@PathVariable Long id, Model model) {
         model.addAttribute("ingredient", new IngredientCommand());
+        model.addAttribute("uomList", unitOfMeasureService.getAllUnitOfMeasureCommand());
 
         return "recipe/ingredients/ingredient-form";
     }
@@ -58,14 +59,15 @@ public class IngredientController {
         return "recipe/ingredients/show";
     }
 
-    @PostMapping("recipe/{id}/ingredient/new")
-    public String addNewIngredient(@PathVariable Long id,
-                                   @ModelAttribute IngredientCommand ingredientCommand, Model model) {
+    @PostMapping("recipe/{recipeId}/ingredient/new")
+    public String addNewIngredient(@ModelAttribute IngredientCommand ingredientCommand, Model model) {
         IngredientCommand saveIngredientCommand = ingredientService.saveIngredientCommand(ingredientCommand);
         model.addAttribute("ingredient", ingredientCommand);
 
         return  "redirect:/recipe/" + saveIngredientCommand.getRecipeId() + "/ingredients";
     }
+
+
 
     //todo: add ingredient
     //todo: update ingredient

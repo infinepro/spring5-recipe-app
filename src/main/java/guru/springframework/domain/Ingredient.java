@@ -19,7 +19,7 @@ public class Ingredient {
     private String description;
 
     @OneToOne
-    private UnitOfMeasure uop;
+    private UnitOfMeasure uom;
 
     @ManyToOne
     private Recipe recipe;

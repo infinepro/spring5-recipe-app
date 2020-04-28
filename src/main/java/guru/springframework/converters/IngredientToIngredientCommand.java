@@ -26,13 +26,13 @@ public class IngredientToIngredientCommand implements Converter<IngredientComman
         }
 
         UnitOfMeasureCommand uopCommand = uopCommandToUop
-                .convert(convertObject.getUop());
+                .convert(convertObject.getUom());
 
         return new IngredientCommand()
                 .setId(convertObject.getId())
                 .setAmount(convertObject.getAmount())
                 .setDescription(convertObject.getDescription())
-                .setUop(uopCommand)
+                .setUom(uopCommand)
                 .setRecipeId(convertObject.getRecipe().getId());
     }
 }

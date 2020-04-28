@@ -25,21 +25,31 @@
                     <h1 class="panel-title">New recipe!</h1>
                 </div>
                 <div class="panel-body">
-                    <form method="post" class="form-horizontal" th:object="${ingredient}" th:action="@{'/recipe' + ${ingredient.recipeId} + '/ingredient/'}">
+                    <form method="post" class="form-horizontal" th:object="${ingredient}"
+                          th:action="@{'/recipe/' + ${ingredient.recipeId} + '/ingredient/new'}">
 
                         <div class="panel">
                             <input type="hidden" th:field="*{id}">
                             <div class="panel-body">
-                                        <span th:field="*{amount}">0</span>
-                                        <select>
-                                            <option th:each="uom : ${uomList}"
-                                                    th:value="$(uom.id)"
-                                                    th:selected="${uom.equals(ingredient.uom)}"
-                                                    th:text="${uom.description}">
-                                                none
-                                            </option>
-                                        </select>
-                                        <span th:field="*{description}">default description</span>
+                                <div class="form-group">
+                                    <label for="amount-input">Amount</label>
+                                    <input class="form-control" id="amount-input" type="number" th:field="*{amount}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="uom-select">Unit of measure</label>
+                                    <select class="form-control" id="uom-select" name="uom.id">
+                                        <option th:each="uom : ${uomList}"
+                                                th:value="${uom.id}"
+                                                th:selected="${uom.equals(ingredient.uom)}"
+                                                th:text="${uom.description}">
+                                            none
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description-input">Description</label>
+                                    <input class="form-control" id="description-input" type="text" th:field="*{description}"/>
+                                </div>
                             </div>
                             <button type="submit" value="Submit" class="btn btn-default">Send</button>
 

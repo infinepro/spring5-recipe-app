@@ -9,11 +9,13 @@ import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class IngredientServiceImpl implements IngredientService {
 
@@ -44,14 +46,14 @@ public class IngredientServiceImpl implements IngredientService {
 
     private void updateIngredientInRecipe(Ingredient ingredient, IngredientCommand ingredientCommand) {
         Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository
-                .findById(ingredient.getUop().getId());
+                .findById(ingredient.getUom().getId());
 
         if (unitOfMeasureOptional.isPresent()) {
             UnitOfMeasure unitOfMeasure = unitOfMeasureOptional.get();
 
             ingredient.setDescription(ingredientCommand.getDescription())
                     .setAmount(ingredientCommand.getAmount())
-                    .setUop(unitOfMeasure);
+                    .setUom(unitOfMeasure);
         } else {
             throw new RuntimeException("Unit of measure not found");
         }
@@ -60,6 +62,7 @@ public class IngredientServiceImpl implements IngredientService {
     @Transactional
     @Override
     public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
+        log.info("обьект для сохранения :" + ingredientCommand.getRecipeId() );
         Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getRecipeId());
 
         if (recipeOptional.isPresent()) {

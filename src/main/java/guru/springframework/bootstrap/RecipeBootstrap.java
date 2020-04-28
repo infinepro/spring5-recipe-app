@@ -71,47 +71,47 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         Ingredient avocado = new Ingredient()
                 .setAmount(new BigDecimal(2))
                 .setDescription("Avocado")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient freshCilantro = new Ingredient()
                 .setAmount(new BigDecimal(0.1))
                 .setDescription("Fresh Cilantro")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient lime = new Ingredient()
                 .setAmount(new BigDecimal(0.5))
                 .setDescription("Lime")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient redOnion = new Ingredient()
                 .setAmount(new BigDecimal(0.25))
                 .setDescription("Red Onion")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient serranoChiles = new Ingredient()
                 .setAmount(new BigDecimal(2))
                 .setDescription("Serrano Chili")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient tomato = new Ingredient()
                 .setAmount(new BigDecimal(0.5))
                 .setDescription("Tomato")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient tortillaChips = new Ingredient()
                 .setAmount(new BigDecimal(0.75))
                 .setDescription("Tortilla Chips")
-                .setUop(pound);
+                .setUom(pound);
 
         Ingredient blackPeppercorns = new Ingredient()
                 .setAmount(new BigDecimal(0.1))
                 .setDescription("Black Peppercorns")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient salt = new Ingredient()
                 .setAmount(new BigDecimal(0.1))
                 .setDescription("Salt")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Set<Ingredient> ingredientsForGuacamole = new HashSet<>();
         ingredientsForGuacamole.add(avocado);
@@ -133,112 +133,112 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         Ingredient anchoChiliPowder = new Ingredient()
                 .setAmount(new BigDecimal(2))
                 .setDescription("Ancho chili povder")
-                .setUop(tablespoon);
+                .setUom(tablespoon);
 
         Ingredient avocado = new Ingredient()
                 .setAmount(new BigDecimal(4))
                 .setDescription("Avocado")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient babyArugula = new Ingredient()
                 .setAmount(new BigDecimal(0.33))
                 .setDescription("Baby Arugula")
-                .setUop(pound);
+                .setUom(pound);
 
         Ingredient cherryTomatoes = new Ingredient()
                 .setAmount(new BigDecimal(0.5))
                 .setDescription("Cherry Tomatoes")
-                .setUop(pound);
+                .setUom(pound);
 
         Ingredient cornTortillas = new Ingredient()
                 .setAmount(new BigDecimal(8))
                 .setDescription("Corn Tortillas")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient driedOregano = new Ingredient()
                 .setAmount(new BigDecimal(0.1))
                 .setDescription("Dried Oregano")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient freshCilantro = new Ingredient()
                 .setAmount(new BigDecimal(0.33))
                 .setDescription("Fresh Cilantro")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient garlicHead = new Ingredient()
                 .setAmount(new BigDecimal(0.25))
                 .setDescription("Garlic Head")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient groundCumin = new Ingredient()
                 .setAmount(new BigDecimal(0.1))
                 .setDescription("Ground Cumin")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient limes = new Ingredient()
                 .setAmount(new BigDecimal(1.5))
                 .setDescription("Limes")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient milk = new Ingredient()
                 .setAmount(new BigDecimal(2))
                 .setDescription("Milk")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient oranges = new Ingredient()
                 .setAmount(new BigDecimal(1.25))
                 .setDescription("Oranges")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient radishes = new Ingredient()
                 .setAmount(new BigDecimal(3.25))
                 .setDescription("Radishes")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient redOnion = new Ingredient()
                 .setAmount(new BigDecimal(0.5))
                 .setDescription("Red Onion")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient serranoChiles = new Ingredient()
                 .setAmount(new BigDecimal(2))
                 .setDescription("Serrano Chiles")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient skinlessBonelessChickenThighs = new Ingredient()
                 .setAmount(new BigDecimal(1.25))
                 .setDescription("Skinless Boneless Chicken Thighs")
-                .setUop(pound);
+                .setUom(pound);
 
         Ingredient sourCream = new Ingredient()
                 .setAmount(new BigDecimal(0.25))
                 .setDescription("Sour Cream")
-                .setUop(pound);
+                .setUom(pound);
 
         Ingredient tomato = new Ingredient()
                 .setAmount(new BigDecimal(0.5))
                 .setDescription("Tomato")
-                .setUop(piece);
+                .setUom(piece);
 
         Ingredient blackPeppercorns = new Ingredient()
                 .setAmount(new BigDecimal(0.1))
                 .setDescription("Black Peppercorns")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient oliveOil = new Ingredient()
                 .setAmount(new BigDecimal(1))
                 .setDescription("Olive Oil")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient salt = new Ingredient()
                 .setAmount(new BigDecimal(0.2))
                 .setDescription("Salt")
-                .setUop(ounce);
+                .setUom(ounce);
 
         Ingredient sugar = new Ingredient()
                 .setAmount(new BigDecimal(0.1))
                 .setDescription("Sugar")
-                .setUop(ounce);
+                .setUom(ounce);
 
 
         Set<Ingredient> ingredientsForGrilledChicken = new HashSet<>();

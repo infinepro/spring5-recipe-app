@@ -3,14 +3,11 @@ package guru.springframework.converters;
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.domain.Ingredient;
-import guru.springframework.domain.UnitOfMeasure;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class IngredientCommandToIngredientTest {
 
@@ -45,14 +42,14 @@ class IngredientCommandToIngredientTest {
     @Test
     void testConvertifUopCommandIsNull () {
         //setup data
-        testIngredientCommand.setUop(null);
+        testIngredientCommand.setUom(null);
 
         //convert
         Ingredient convertIngredient = ingredientCommandToIngredient.convert(testIngredientCommand);
 
         //check
         Assertions.assertEquals(convertIngredient.getDescription(), testIngredientCommand.getDescription());
-        Assertions.assertNull(convertIngredient.getUop());
+        Assertions.assertNull(convertIngredient.getUom());
     }
 
     @Test
@@ -61,7 +58,7 @@ class IngredientCommandToIngredientTest {
         UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand()
                 .setId(UNIT_OF_MEASURE_ID);
 
-        testIngredientCommand.setUop(unitOfMeasureCommand);
+        testIngredientCommand.setUom(unitOfMeasureCommand);
 
         //convert
         Ingredient convertIngredient = ingredientCommandToIngredient.convert(testIngredientCommand);
@@ -70,7 +67,7 @@ class IngredientCommandToIngredientTest {
         Assertions.assertEquals(convertIngredient.getId(), testIngredientCommand.getId());
         Assertions.assertEquals(convertIngredient.getAmount(), testIngredientCommand.getAmount());
         Assertions.assertEquals(convertIngredient.getDescription(), testIngredientCommand.getDescription());
-        Assertions.assertEquals(convertIngredient.getUop().getId(), testIngredientCommand.getUop().getId());
+        Assertions.assertEquals(convertIngredient.getUom().getId(), testIngredientCommand.getUom().getId());
 
     }
 }
