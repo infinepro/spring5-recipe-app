@@ -49,6 +49,15 @@ public class IngredientController {
         return "recipe/ingredients/ingredient-form";
     }
 
+    @GetMapping("recipe/{recipeId}/ingredient/{id}/delete")
+    public String deleteIngredient(@PathVariable Long id,
+                                   @PathVariable Long recipeId, Model model) {
+        ingredientService.deleteIngredientById(id);
+        model.addAttribute("recipe", recipeService.getRecipeById(recipeId));
+
+        return "recipe/ingredients/show";
+    }
+
     @PostMapping("recipe/{id}/ingredient/new")
     public String addNewIngredient(@PathVariable Long id,
                                    @ModelAttribute IngredientCommand ingredientCommand, Model model) {

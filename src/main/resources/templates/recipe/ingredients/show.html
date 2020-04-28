@@ -36,6 +36,7 @@
                                 <th scope="col">Description</th>
                                 <th scope="col">-</th>
                                 <th scope="col">-</th>
+                                <th scope="col">-</th>
                             </tr>
                             </thead>
                             <tr th:each="ingredient : ${recipe.ingredients}">
@@ -45,6 +46,7 @@
                                 <td th:text="${ingredient.description}">none</td>
                                 <td><a th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/update'}">update</a></td>
                                 <td><a th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/delete'}">delete</a></td>
+                                <td><a th:href="@{'/recipe/' + ${recipe.id} + '/ingredient/' + ${ingredient.id} + '/new'}">delete</a></td>
                             </tr>
                         </table>
                     </div>

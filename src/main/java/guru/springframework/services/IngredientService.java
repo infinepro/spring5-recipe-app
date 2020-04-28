@@ -9,5 +9,7 @@ public interface IngredientService {
     IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
 
     IngredientCommand getIngredientById(Long id);
+
+    void deleteIngredientById(Long id);
 }
 
