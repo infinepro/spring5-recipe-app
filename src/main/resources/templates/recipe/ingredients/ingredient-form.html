@@ -39,10 +39,8 @@
                                                 none
                                             </option>
                                         </select>
-                                        <span th:field="${description}">default description</span>
+                                        <span th:field="*{description}">default description</span>
                             </div>
-
-
                             <button type="submit" value="Submit" class="btn btn-default">Send</button>
 
                         </div>

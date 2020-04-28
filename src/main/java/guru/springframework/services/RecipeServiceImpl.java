@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,13 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> getAllRecipes() {
-        return (List<Recipe>)recipeRepository.findAll();
+
+        Iterable<Recipe> recipes = recipeRepository.findAll();
+        if (recipes.iterator().hasNext()) {
+            return (List<Recipe>)recipes;
+        } else {
+            return new ArrayList<Recipe>();
+        }
     }
 
     @Override
@@ -40,7 +47,6 @@ public class RecipeServiceImpl implements RecipeService {
         if (!recipeOptional.isPresent()) {
             throw new RuntimeException();
         }
-
         return recipeOptional.get();
     }
 
