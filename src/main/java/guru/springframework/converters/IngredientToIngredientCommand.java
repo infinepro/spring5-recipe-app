@@ -25,6 +25,14 @@ public class IngredientToIngredientCommand implements Converter<IngredientComman
             return null;
         }
 
+        Long recipeId;
+
+        if (convertObject.getRecipe() == null || convertObject.getRecipe().getId() == null) {
+            recipeId = null;
+        } else {
+            recipeId = convertObject.getRecipe().getId();
+        }
+
         UnitOfMeasureCommand uopCommand = uopCommandToUop
                 .convert(convertObject.getUom());
 
@@ -33,6 +41,6 @@ public class IngredientToIngredientCommand implements Converter<IngredientComman
                 .setAmount(convertObject.getAmount())
                 .setDescription(convertObject.getDescription())
                 .setUom(uopCommand)
-                .setRecipeId(convertObject.getRecipe().getId());
+                .setRecipeId(recipeId);
     }
 }

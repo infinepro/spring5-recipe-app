@@ -2,6 +2,7 @@ package guru.springframework.converters;
 
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.domain.Ingredient;
+import guru.springframework.domain.Recipe;
 import guru.springframework.domain.UnitOfMeasure;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 
 class IngredientToIngredientCommandTest {
 
+    final Long recipeId = 12L;
     final Long INGREDIENT_ID = 33L;
     final BigDecimal INGREDIENT_AMOUNT = new BigDecimal(55);
     final String INGREDIENT_DESCRIPTION = "test description";
@@ -27,7 +29,8 @@ class IngredientToIngredientCommandTest {
                 .setId(INGREDIENT_ID)
                 .setAmount(INGREDIENT_AMOUNT)
                 .setDescription(INGREDIENT_DESCRIPTION)
-                .setUom(null);
+                .setUom(null)
+                .setRecipe(new Recipe().setId(recipeId));
     }
 
     @Test

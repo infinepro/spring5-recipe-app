@@ -54,7 +54,7 @@ public class IngredientController {
     public String deleteIngredient(@PathVariable Long id,
                                    @PathVariable Long recipeId, Model model) {
         ingredientService.deleteIngredientById(id);
-        model.addAttribute("recipe", recipeService.getRecipeById(recipeId));
+        model.addAttribute("recipe", recipeService.getRecipeCommandById(recipeId));
 
         return "recipe/ingredients/show";
     }
@@ -66,12 +66,4 @@ public class IngredientController {
 
         return  "redirect:/recipe/" + saveIngredientCommand.getRecipeId() + "/ingredients";
     }
-
-
-
-    //todo: add ingredient
-    //todo: update ingredient
-    //todo: delete ingredient
-    //todo: show ingredient
-
 }
