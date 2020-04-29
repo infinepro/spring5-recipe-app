@@ -9,6 +9,7 @@ import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,6 +64,7 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
         log.info("обьект для сохранения :" + ingredientCommand.getRecipeId() );
+
         Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getRecipeId());
 
         if (recipeOptional.isPresent()) {
@@ -86,8 +88,7 @@ public class IngredientServiceImpl implements IngredientService {
             return ingredientToIngredientCommand
                     .convert(findIngredientInRecipe(recipeSave, ingredientCommand.getId()).get());
         } else {
-            //throw new RuntimeException("recipe not found, id:" + ingredientCommand.getRecipeId());
-            return new IngredientCommand();
+            throw new RuntimeException("recipe not found, id:" + ingredientCommand.getRecipeId());
         }
     }
 

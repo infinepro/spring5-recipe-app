@@ -1,6 +1,5 @@
 package guru.springframework.services;
 
-import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.UnitOfMeasureRepository;
@@ -10,11 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 class UnitOfMeasureServiceImplTest {
