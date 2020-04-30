@@ -1,6 +1,7 @@
 package guru.springframework.services;
 
 import guru.springframework.commands.IngredientCommand;
+import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.converters.IngredientCommandToIngredient;
 import guru.springframework.converters.IngredientToIngredientCommand;
 import guru.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
@@ -11,19 +12,17 @@ import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 class IngredientServiceImplTest {
 
@@ -56,29 +55,36 @@ class IngredientServiceImplTest {
 
     @Test
     void testSaveIngredientCommandIfRecipeNotFound() {
-        Optional<Recipe> emptyOptional = Optional.empty();
+        IngredientCommand ingredientCommand = new IngredientCommand()
+                .setId(1L)
+                .setRecipeId(2L); //for logging ing method, else NPE
 
-        when(recipeRepository.findById(anyLong())).thenReturn(emptyOptional);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(RuntimeException.class, () -> ingredientService.saveIngredientCommand(any()));
-        verify()
+        Throwable throwable = assertThrows(RuntimeException.class, () -> ingredientService.saveIngredientCommand(ingredientCommand));
+        assertNotNull(throwable.getMessage());
     }
 
     @Test
     void testSaveIngredientCommandIfUnitOfMeasureNotFound() {
+        Long INGREDIENT_ID = 1L;
+
+        IngredientCommand ingredientCommand = new IngredientCommand()
+                .setId(INGREDIENT_ID)
+                .setRecipeId(2L)
+                .setUom(new UnitOfMeasureCommand().setId(3L)); //for logging ing method, else NPE
 
         Recipe recipe = new Recipe()
                 .setId(10L)
                 .setDescription("some description");
 
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
-        Optional<UnitOfMeasure> emptyOptional = Optional.empty();
+        recipe.getIngredients().add(new Ingredient().setId(INGREDIENT_ID));
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
-        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(emptyOptional);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-
-        Assertions.assertThrows(RuntimeException.class, () -> ingredientService.saveIngredientCommand(any()));
+        Throwable throwable = assertThrows(RuntimeException.class, () -> ingredientService.saveIngredientCommand(ingredientCommand));
+        assertNotNull(throwable.getMessage());
     }
 
     @Test
@@ -87,34 +93,36 @@ class IngredientServiceImplTest {
         //set up
         final Long INGREDIENT_ID = 3L;
 
-        IngredientCommand ingredientCommand = new IngredientCommand()
-                .setId(INGREDIENT_ID);
-
-        Set<Ingredient> ingredients = new HashSet<>();
-        ingredients.add(new Ingredient().setId(INGREDIENT_ID));
+        UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand()
+                    .setId(4L)
+                    .setDescription("some description");
 
         UnitOfMeasure unitOfMeasure = new UnitOfMeasure()
-                    .setId(4L)
-                    .setDescription("som description");
+                .setId(3L)
+                .setDescription("some description");
+
+        IngredientCommand ingredientCommand = new IngredientCommand()
+                .setId(INGREDIENT_ID)
+                .setRecipeId(10L)
+                .setUom(unitOfMeasureCommand);
+
+        Ingredient ingredient = new Ingredient()
+                .setId(INGREDIENT_ID);
+
 
         Recipe recipe = new Recipe()
                 .setId(10L)
-                .setDescription("some description")
-                .setIngredients(ingredients);
-
-
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
-        Optional<UnitOfMeasure> uomOptional = Optional.of(unitOfMeasure);
+                .setDescription("some description");
+                recipe.getIngredients().add(ingredient);
 
         //mock
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
-        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(uomOptional);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(Optional.of(unitOfMeasure));
+        when(recipeRepository.save(any())).thenReturn(recipe);
 
         //check result
-        Assertions.assertEquals(ingredientService.saveIngredientCommand(ingredientCommand).getId(), INGREDIENT_ID);
-        verify(recipe.getIngredients(), times(0)).add(any());
-        verify(recipeRepository, times(1)).save(any());
-
+        assertEquals(ingredientService.saveIngredientCommand(ingredientCommand).getId(), INGREDIENT_ID);
+        assertEquals(recipe.getIngredients().size(), 1L);
     }
 
     @Test
@@ -124,29 +132,30 @@ class IngredientServiceImplTest {
         final Long INGREDIENT_ID = 3L;
 
         IngredientCommand ingredientCommand = new IngredientCommand()
-                .setId(INGREDIENT_ID);
+                .setId(INGREDIENT_ID)
+                .setRecipeId(10L);
 
         UnitOfMeasure unitOfMeasure = new UnitOfMeasure()
                 .setId(4L)
                 .setDescription("som description");
 
+        Ingredient ingredient = new Ingredient()
+                .setId(INGREDIENT_ID)
+                .setUom(unitOfMeasure);
+
         Recipe recipe = new Recipe()
                 .setId(10L)
                 .setDescription("some description");
-
-
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
-        Optional<UnitOfMeasure> uomOptional = Optional.of(unitOfMeasure);
+        recipe.getIngredients().add(new Ingredient().setId(3333L));
 
         //mock
-        when(recipeRepository.findById(any())).thenReturn(recipeOptional);
-        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(uomOptional);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(Optional.of(unitOfMeasure));
+        when(recipeRepository.save(any())).thenReturn(recipe);
 
         //check result
-        Assertions.assertEquals(ingredientService.saveIngredientCommand(any()).getId(), INGREDIENT_ID);
-        verify(recipe.getIngredients(), times(1)).add(any());
-        verify(recipeRepository, times(1)).save(any());
-
+        assertEquals(ingredientService.saveIngredientCommand(ingredientCommand).getId(), INGREDIENT_ID);
+        assertEquals(recipe.getIngredients().size(), 2L);
     }
 
     @Test
@@ -155,8 +164,8 @@ class IngredientServiceImplTest {
 
         when(ingredientRepository.findById(anyLong())).thenReturn(emptyOptional);
 
-        Assertions.assertNotNull(ingredientService.getIngredientById(anyLong()));
-        Assertions.assertNull(ingredientService.getIngredientById(anyLong()).getId());
+        assertNotNull(ingredientService.getIngredientById(anyLong()));
+        assertNull(ingredientService.getIngredientById(anyLong()).getId());
     }
 
     @Test
@@ -168,7 +177,7 @@ class IngredientServiceImplTest {
 
         when(ingredientRepository.findById(anyLong())).thenReturn(testOptional);
 
-        Assertions.assertNotNull(ingredientService.getIngredientById(anyLong()));
-        Assertions.assertEquals(ingredientService.getIngredientById(anyLong()).getId(), testId);
+        assertNotNull(ingredientService.getIngredientById(anyLong()));
+        assertEquals(ingredientService.getIngredientById(anyLong()).getId(), testId);
     }
 }

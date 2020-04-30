@@ -47,7 +47,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     private void updateIngredientInRecipe(Ingredient ingredient, IngredientCommand ingredientCommand) {
         Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository
-                .findById(ingredient.getUom().getId());
+                .findById(ingredientCommand.getUom().getId());
 
         if (unitOfMeasureOptional.isPresent()) {
             UnitOfMeasure unitOfMeasure = unitOfMeasureOptional.get();
@@ -64,18 +64,15 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
         log.info("обьект для сохранения :" + ingredientCommand.getRecipeId() );
-
         Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getRecipeId());
 
         if (recipeOptional.isPresent()) {
             Recipe recipe = recipeOptional.get();
-
             Optional<Ingredient> ingredientOptional = findIngredientInRecipe(recipe, ingredientCommand.getId());
 
             if (ingredientOptional.isPresent()) {
                 //if ingredient founded then update it
                 Ingredient ingredient = ingredientOptional.get();
-
                 updateIngredientInRecipe(ingredient, ingredientCommand);
             } else {
                 //if ingredient not found then add new
