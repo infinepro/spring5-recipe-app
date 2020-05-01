@@ -43,7 +43,9 @@ public class RecipeCommandToRecipe implements Converter<Recipe, RecipeCommand> {
                 .setCookTime(convertObject.getCookTime())
                 .setDirections(convertObject.getDirections())
                 .setDifficulty(convertObject.getDifficulty())
-                .setNotes(notes);
+                .setNotes(notes)
+                .setImage(convertObject.getImage());
+
 
         if (convertObject.getCategories() != null && convertObject.getCategories().size() > 0) {
             convertObject.getCategories()

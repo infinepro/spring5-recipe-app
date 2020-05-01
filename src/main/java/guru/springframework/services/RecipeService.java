@@ -19,4 +19,5 @@ public interface RecipeService {
 
     @Transactional
     void deleteRecipeById(Long id);
+
 }
