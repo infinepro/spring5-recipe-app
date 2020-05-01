@@ -139,10 +139,6 @@ class IngredientServiceImplTest {
                 .setId(4L)
                 .setDescription("som description");
 
-        Ingredient ingredient = new Ingredient()
-                .setId(INGREDIENT_ID)
-                .setUom(unitOfMeasure);
-
         Recipe recipe = new Recipe()
                 .setId(10L)
                 .setDescription("some description");
