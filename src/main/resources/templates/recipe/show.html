@@ -21,7 +21,8 @@
     <div class="panel panel-info" style="margin-top: 20px">
         <div class="panel-heading"><h2 th:text="${recipe.description}">Panel heading</h2></div>
         <div class="panel-body">
-            <p> <img th:text="${recipe.cookTime}">none</img> minutes;</p>
+            <p> <img th:src="@{'/recipe/' + ${recipe.id} + '/recipe-image'}" height="200px"/>  </p>
+            <a class="btn btn-default" th:href="@{'/recipe/' + ${recipe.id} + '/image/new'}">change</a>
             <p>Cook time: <span th:text="${recipe.cookTime}">none</span> minutes;</p>
             <p>Prepare time: <span th:text="${recipe.prepTime}">none</span> minutes;</p>
             <p>Source: <a th:href="${recipe.source}"><span th:text="${recipe.source}">none</span></a></p>
