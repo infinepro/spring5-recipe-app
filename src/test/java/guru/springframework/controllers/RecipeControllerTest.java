@@ -2,7 +2,9 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.domain.Recipe;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.RecipeService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -10,6 +12,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -99,8 +104,18 @@ public class RecipeControllerTest {
     }
 
     @Test
-    void handleNumberFormat() {
-
+    void handleNumberFormat() throws Exception {
+        mockMvc.perform(get("/recipe/show/sddfsdf"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("error400"));
     }
 
+    @Test
+    void handleNotFound() throws Exception {
+        when(recipeService.getRecipeById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/show/10"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("error404"));
+    }
 }
