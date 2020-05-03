@@ -97,4 +97,10 @@ public class RecipeControllerTest {
 
         verify(recipeService, times(1)).deleteRecipeById(anyLong());
     }
+
+    @Test
+    void handleNumberFormat() {
+
+    }
+
 }
