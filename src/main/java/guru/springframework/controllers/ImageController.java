@@ -50,6 +50,10 @@ public class ImageController {
     public void getImageFromDb(@PathVariable Long id, HttpServletResponse response) throws IOException {
         RecipeCommand recipeCommand = recipeService.getRecipeCommandById(id);
 
+        if (recipeCommand.getImage() == null) {
+            return;
+        }
+
         byte[] primBytes = new byte[recipeCommand.getImage().length];
         Byte[] bytes = recipeCommand.getImage();
 

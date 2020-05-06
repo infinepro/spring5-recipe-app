@@ -322,8 +322,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                     .setNotes(notesForGuacamoleRecipe)
                     .setPrepTime(10)
                     .setServings(4)
-                    .setUrl("none")
-                    .setSource("https://www.simplyrecipes.com/recipes/perfect_guacamole/")
+                    .setSource("none")
+                    .setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/")
                     .setDescription("How to Make Perfect Guacamole");
         }
 
@@ -351,8 +351,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                     .setNotes(notesForGrilledChickenRecipe)
                     .setPrepTime(20)
                     .setServings(5)
-                    .setUrl("none")
-                    .setSource("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/")
+                    .setSource("none")
+                    .setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/")
                     .setDescription("Spicy Grilled Chicken Tacos");
         }
 

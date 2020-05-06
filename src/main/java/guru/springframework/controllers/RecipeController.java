@@ -1,20 +1,23 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
-import guru.springframework.exceptions.NotFoundException;
+    import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
 public class RecipeController {
 
-    private RecipeService recipeService;
+    private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
@@ -42,21 +45,27 @@ public class RecipeController {
         return "recipe/recipe-form";
     }
 
-
-    @PostMapping("recipe/new")
-    public String saveOrUpdateRecipe(@ModelAttribute RecipeCommand recipeCommand) {
-        RecipeCommand saveRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
-        log.info("Add or update recipe with ID: " + saveRecipeCommand.getId());
-
-        return "redirect:/recipe/show/" + saveRecipeCommand.getId();
-    }
-
     @GetMapping("recipe/{id}/delete")
     public String deleteRecipeById(@PathVariable Long id) {
         recipeService.deleteRecipeById(id);
         log.info("Recipe with ID: " + id + " deleted");
 
         return "redirect:/index";
+    }
+
+    @PostMapping("recipe/new")
+    public String saveOrUpdateRecipe(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+            log.error(bindingResult.getAllErrors().toString());
+
+            return "recipe/recipe-form";
+        } else {
+            RecipeCommand saveRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
+            log.info("Add or update recipe with ID: " + saveRecipeCommand.getId());
+
+            return "redirect:/recipe/show/" + saveRecipeCommand.getId();
+        }
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -72,16 +81,5 @@ public class RecipeController {
         return modelAndView;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView handleNumberFormat(Exception exception) {
-        log.error("Handling number format exception");
-        log.error(exception.getMessage());
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("error400");
-        modelAndView.addObject("exception", exception);
-
-        return modelAndView;
-    }
 }

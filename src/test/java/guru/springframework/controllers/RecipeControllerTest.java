@@ -35,7 +35,9 @@ public class RecipeControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         recipeController = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
+                .setControllerAdvice(ExceptionHandlerController.class)
+                .build();
     }
 
     @Test
@@ -112,7 +114,7 @@ public class RecipeControllerTest {
 
     @Test
     void handleNotFound() throws Exception {
-        when(recipeService.getRecipeById(anyLong())).thenThrow(NotFoundException.class);
+        when(recipeService.getRecipeCommandById(anyLong())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(get("/recipe/show/10"))
                 .andExpect(status().isNotFound())
