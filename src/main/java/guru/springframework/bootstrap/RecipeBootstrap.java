@@ -20,18 +20,23 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private RecipeRepository recipeRepository;
     private UnitOfMeasureRepository unitOfMeasureRepository;
 
-    private final UnitOfMeasure ounce;
-    private final UnitOfMeasure pound;
-    private final UnitOfMeasure piece;
-    private final UnitOfMeasure tablespoon;
+    private UnitOfMeasure ounce;
+    private UnitOfMeasure pound;
+    private UnitOfMeasure piece;
+    private UnitOfMeasure tablespoon;
+
+    private boolean checkDataExistInDB() {
+        //if data not exists then return false else return true
+        return categoryRepository.findAll().iterator().hasNext();
+    }
 
     public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
 
-        //init unit of measure
-        {
+        if (!checkDataExistInDB()) {
+            //init unit of measure
             Optional<UnitOfMeasure> pieceOpt = unitOfMeasureRepository.findByDescription("piece");
             if (!pieceOpt.isPresent()) {
                 throw new RuntimeException();
@@ -59,11 +64,16 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         }
     }
 
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         log.info("App event is happened");
-        recipeRepository.saveAll(initListRecipes());
-        log.info("Recipes initialisation successful");
+        if (checkDataExistInDB()) {
+            log.info("Recipe data already exist");
+        } else {
+            recipeRepository.saveAll(initListRecipes());
+            log.info("Recipes initialisation successful");
+        }
     }
 
     private Set<Ingredient> initIngredientsForGuacamole() {
