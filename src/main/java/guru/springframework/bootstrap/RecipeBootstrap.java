@@ -6,6 +6,7 @@ import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import java.util.*;
 
 @Slf4j
 @Component
+@Profile("default")
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private CategoryRepository categoryRepository;
@@ -25,17 +27,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private UnitOfMeasure piece;
     private UnitOfMeasure tablespoon;
 
-    private boolean checkDataExistInDB() {
-        //if data not exists then return false else return true
-        return categoryRepository.findAll().iterator().hasNext();
-    }
 
     public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
 
-        if (!checkDataExistInDB()) {
+        if (unitOfMeasureRepository.count() == 0L) {
             //init unit of measure
             Optional<UnitOfMeasure> pieceOpt = unitOfMeasureRepository.findByDescription("piece");
             if (!pieceOpt.isPresent()) {
@@ -68,7 +66,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         log.info("App event is happened");
-        if (checkDataExistInDB()) {
+        if (recipeRepository.count() != 0L) {
             log.info("Recipe data already exist");
         } else {
             recipeRepository.saveAll(initListRecipes());
